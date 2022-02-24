@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HighChart Sample</title>
+    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+
+</head>
+
+<body>
+    <div id="container" style="height: 100vh;"></div>
+
+
+    <script>
+        // Prepare random data
+        var data = [
+            ['BUMIJAWA', 30],
+            ['MARGASARI', 3]
+        ];
+
+        Highcharts.getJSON('http://127.0.0.1:5500/data/jateng/tegal/tegal.json', function (geojson) {
+
+            // Initialize the chart
+            Highcharts.mapChart('container', {
+                chart: {
+                    map: geojson
+                },
+
+                title: {
+                    text: 'GeoJSON in Highmaps'
+                },
+
+                mapNavigation: {
+                    enabled: true,
+                    buttonOptions: {
+                        verticalAlign: 'bottom'
+                    }
+                },
+
+                colorAxis: {
+                    tickPixelInterval: 100
+                },
+
+                series: [{
+                    data: data,
+                    keys: ['Name', 'value'],
+                    joinBy: 'Name',
+                    name: 'Random data',
+                    states: {
+                        hover: {
+                            color: '#a4edba'
+                        }
+                    },
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.properties.Name}'
+                    }
+                }]
+            });
+        });
+
+    </script>
+</body>
+
+</html>
